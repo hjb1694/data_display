@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+<meta charset="utf-8">
+<title>Charts</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+      *{
+        margin:0;
+        padding:0;
+        box-sizing: inherit;
+      }
+
+      html{
+        box-sizing:border-box;
+        font-size:62.5%;
+        height:100%;
+      }
+
+      body{
+        font-family: 'Poppins', sans-serif;
+        background:#eee;
+        padding:2rem;
+        height:100%;
+        background:linear-gradient(to bottom right, #36D1DC, #5B86E5);
+      }
+
+      button, 
+      select, 
+      a {
+        cursor:pointer;
+      }
+
+      .filter-form{
+        background:#fff;
+        box-shadow:0 0 .5rem rgba(0,0,0,.2);
+        border-radius:.5rem;
+      }
+
+      .filter-form__header{
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+        padding:1rem;
+      }
+
+      .filter-form__heading-text{
+        font-weight:700;
+        text-transform:uppercase;
+        font-size:2rem;
+        color:#333;
+      }
+
+      .filter-form__toggle{
+        font-size:2rem;
+        background:transparent;
+        border:none;
+        color:#aaa;
+        transition: transform .3s;
+      }
+
+      .filter-form__body{
+        height:0;
+        opacity:0;
+        overflow:hidden;
+        transition:all .3s ease-in-out;
+        border-top:1px solid #eee;
+      }
+
+      .filter-form__body.show{
+        height:16rem;
+        opacity:1;
+        padding:1rem;
+      }
+
+      .filter-form__fields{
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+        column-gap:1rem;
+      }
+
+      .field label{
+        display:block;
+        font-weight:bold;
+        font-size:1.4rem;
+        margin-bottom:3px;
+      }
+
+      .field select{
+        display:block;
+        width:100%;
+        border:1px solid #ccc;
+        padding:1rem;
+        border-radius:.5rem;
+        outline:none;
+        transition: border .3s;
+        font-family:inherit;
+      }
+
+      .field select:focus {
+        border:1px solid #5B86E5;
+      }
+
+      .subbut{
+        border:none;
+        color:#fff;
+        background:linear-gradient(to bottom right, #36D1DC, #5B86E5);
+        outline:none;
+        font-size:1.6rem;
+        padding:1rem;
+        border-radius:.5rem;
+        margin-top:2rem;
+        transition: transform .3s;
+      }
+
+      .subbut:hover, 
+      .subbut:active {
+        transform:scale(1.05);
+      }
+
+      .data-section {
+        background:#fff;
+        padding:1rem;
+        box-shadow:0 0 .5rem rgba(0,0,0,.2);
+        border-radius:.5rem;
+        min-height:50rem;
+        margin-top:2rem;
+      }
+
+      .bar-outer{
+        width:100%;
+        height:7rem;
+        background:#555;
+        border-radius:.5rem;
+        border:2px solid #333;
+      }
+
+      .bars-inner{
+        width:100%;
+        height:100%;
+        background:transparent;
+        display:flex;
+      }
+
+      .bars-inner > * {
+        font-size:1.4rem;
+        padding:1rem;
+        transition:width .3s;
+      }
+
+      .nat-merge-bar{
+        background:greenyellow;
+        height:100%;
+      }
+
+      .n-merge-bar{
+        background:pink;
+        height:100%;
+      }
+
+      .no-merge-bar{
+        background:blueviolet;
+        height:100%;
+      }
+
+      .legend {
+        margin-top:3rem;
+      }
+
+      .legend__item{
+        display:flex;
+        align-items: center;
+        margin-bottom:1rem;
+      }
+
+      .legend__color-box{
+        width:2rem;
+        height:2rem;
+        border:1px solid #000;
+      }
+
+      .legend__color-box--nat{
+        background:greenyellow;
+      }
+
+      .legend__color-box--n{
+        background:pink;
+      }
+
+      .legend__color-box--no{
+        background:blueviolet;
+      }
+  </style>
+
+
+</head>
+<body>
+
+    <form class="filter-form">
+      <header class="filter-form__header">
+        <h2 class="filter-form__heading-text">Filter <i class="fa fa-filter"></i></h2>
+        <button type="button" class="filter-form__toggle">
+          <i class="fa fa-chevron-up"></i>
+        </button>
+      </header>
+      <section class="filter-form__body show">
+        <div class="filter-form__fields">
+          <div class="field">
+            <label for="company">Company</label>
+            <select id="company">
+              <option value="all">All Companies</option>
+              <option value="COSTCO">Costco</option>
+              <option value="COOPER_VISION">Cooper Vision</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="merge-type">Merge Type</label>
+            <select id="merge-type">
+              <option value="all">All Merges</option>
+              <option value="no-merge">No Merge</option>
+              <option value="n-merge">N-Merge</option>
+              <option value="nat-merge">Nat-Merge</option>
+            </select>
+          </div>
+        </div>
+        <button class="subbut">Go <a class="fa fa-arrow-right"></a></button>
+      </section>
+    </form>
+
+    <section class="data-section">
+
+      <div class="bar-outer">
+        <div class="bars-inner">
+          <div class="nat-merge-bar">
+            
+          </div>
+          <div class="n-merge-bar">
+            
+          </div>
+          <div class="no-merge-bar">
+            
+          </div>
+        </div>
+      </div>
+
+      <div class="legend">
+        <div class="legend__item">
+          <div class="legend__color-box legend__color-box--nat"></div> - Nat Merges
+        </div>
+        <div class="legend__item">
+          <div class="legend__color-box legend__color-box--n"></div> - N Merges
+        </div>
+        <div class="legend__item">
+          <div class="legend__color-box legend__color-box--no"></div> - No Merges
+        </div>
+      </div>
+
+    </section>
+
+
+<!-- <h1>Pretty Data below</h1> -->
+<!-- <p>{{info|safe}}</p> -->
+
+
+<script>
+
+    const filterToggleButton = document.querySelector('.filter-form__toggle');
+    const filterForm = document.querySelector('.filter-form');
+    const filterFormBody = document.querySelector('.filter-form__body');
+
+    const { data } = JSON.parse('{{info|safe}}');
+    let filteredData;
+    let filteredDataMergePercentages = {}
+
+    console.log(data);
+
+    const filterCriteria = (field, criteria) => {
+      return filteredData.filter(item => item[field] === criteria);
+    }
+
+    const generatePercentValue = (field, fieldValue) => {
+      return (filterCriteria(field, fieldValue).length / filteredData.length).toFixed(3) * 100;
+    }
+
+    const setBars = () => {
+
+      const natMergeBar = document.querySelector('.nat-merge-bar');
+      const nMergeBar = document.querySelector('.n-merge-bar');
+      const noMergeBar = document.querySelector('.no-merge-bar');
+
+      const formValues = {
+        mergeType: document.querySelector('#merge-type').value
+      }
+
+      const displayBars = (natMergeDisplay, nMergeDisplay, noMergeDisplay) => {
+        natMergeBar.style.display = natMergeDisplay;
+        nMergeBar.style.display = nMergeDisplay;
+        noMergeBar.style.display = noMergeDisplay;
+      }
+
+      if(formValues.mergeType !== 'all'){
+        if(formValues.mergeType === 'no-merge'){
+          displayBars('none','none','flex')
+        }else if(formValues.mergeType === 'n-merge'){
+          displayBars('none','flex','none');
+        }else if(formValues.mergeType === 'nat-merge'){
+          displayBars('flex','none','none');
+        }
+      }else{
+        displayBars('flex','flex','flex');
+      }
+
+      natMergeBar.style.width = `${Math.ceil(filteredDataMergePercentages.natMerge)}%`;
+      nMergeBar.style.width = `${Math.ceil(filteredDataMergePercentages.nMerge)}%`;
+      noMergeBar.style.width = `${Math.ceil(filteredDataMergePercentages.noMerge)}%`;
+
+      natMergeBar.innerText = `${filteredDataMergePercentages.natMerge.toFixed(2)}%`;
+      nMergeBar.innerText = `${filteredDataMergePercentages.nMerge.toFixed(2)}%`;
+      noMergeBar.innerText = `${filteredDataMergePercentages.noMerge.toFixed(2)}%`;
+
+
+    }
+
+    const createMergePercentages = () => {
+
+      filteredDataMergePercentages.noMerge = generatePercentValue('merge_type','no-merge');
+      filteredDataMergePercentages.nMerge = generatePercentValue('merge_type', 'n-merge');
+      filteredDataMergePercentages.natMerge = generatePercentValue('merge_type', 'nat-merge');
+
+      setBars();
+
+    }
+
+    const applyFilter = e => {
+      e.preventDefault();
+
+      const formValues = {
+        company: document.querySelector('#company').value
+      }
+
+      filteredData = [...data];
+
+      if(formValues.company !== 'all'){
+        filteredData = filterCriteria('retailer_code', formValues.company);
+      }
+
+      createMergePercentages();
+
+    }
+
+    const toggleFilterForm = () => {
+
+      if(filterFormBody.classList.contains('show')){
+        filterToggleButton.style.transform = 'rotate(180deg)';
+      }else{
+        filterToggleButton.style.transform = 'rotate(0)';
+      }
+
+      filterFormBody.classList.toggle('show');
+    }
+
+    const init = () => {
+      filteredData = [...data];
+      createMergePercentages();
+    }
+
+
+    filterToggleButton.addEventListener('click', toggleFilterForm);
+    filterForm.addEventListener('submit', applyFilter);
+    init();
+
+
+</script>
+
+</body>
+</html>
+

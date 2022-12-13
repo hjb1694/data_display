@@ -1,0 +1,13 @@
+requests
+Flask
+Werkzeug
+cryptography
+Flask-JWT-Extended
+Flask-JWT-Extended
+mysql-connector-python
+PyJWT
+xmltodict
+openpyxl
+cryptography
+pandas
+pytz
